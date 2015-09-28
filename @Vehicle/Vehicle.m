@@ -1,22 +1,35 @@
-classdef Vehicle
+classdef Vehicle 
+    
+    properties (Access = public)
+        trans_ 
+    end    
     
     properties (Access = protected)
-        pose_
         footprint_
         geometries_
+        ax_
+    end
+    
+    properties (Abstract)
+        x_
+    end
+    
+    methods (Abstract)
+        init(vehicle)
     end
     
     methods
-        function vehicle = Vehicle()
+        function vehicle = Vehicle(ax)
+            if nargin > 0
+                vehicle.ax_=ax;
+            else
+                vehicle.ax_= axes('XLim',[-5 5],'YLim',[-5 5],'ZLim',[0 1]);
+            end
+
             import casadi.*;
-            % footprint_=Geometry;
-            % geometry_=Geometry;
-            disp('Constructed Vehicle');
+            vehicle.trans_=hgtransform('Parent', vehicle.ax_);;
+            
         end
 
-        function print(obj)
-            disp('schas');
-        end
     end
-    
 end    

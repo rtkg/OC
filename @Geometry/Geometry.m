@@ -1,11 +1,15 @@
 classdef Geometry
 
-    properties
+    properties (Access = public)
+        trans_
+    end
+    
+    properties (Access = protected)
         border_color_
         border_width_
         fill_color_
         fill_alpha_
-    end    
+    end   
 
     methods
         function geometry = Geometry(border_color, border_width, fill_color, fill_alpha)
@@ -13,7 +17,7 @@ classdef Geometry
             geometry.border_width_=2;
             geometry.fill_color_='b';
             geometry.fill_alpha_=1;
-            
+
             switch nargin
               case 1
                 geometry.border_color_=border_color;
@@ -30,8 +34,6 @@ classdef Geometry
                 geometry.fill_color_=fill_color;
                 geometry.fill_alpha_=fill_alpha;
             end
-            
-            disp('Constructed Geometry');
         end
     end
 end
