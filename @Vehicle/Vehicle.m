@@ -16,6 +16,7 @@ classdef Vehicle
     
     methods (Abstract)
         init(vehicle)
+        computePosture(vehicle)
     end
     
     methods

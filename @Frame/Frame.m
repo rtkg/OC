@@ -35,9 +35,9 @@ classdef Frame < Geometry
 
             frame.g_obj_=zeros(4,1);
 
-            frame.g_obj_(1) = mArrow3(zeros(3,1), [frame.scale_; 0; 0],'color','r','Parent',frame.ax_);%,'stemWidth', frame.scale_,'tipWidth',frame.scale_,'Parent',frame.ax_);
-            frame.g_obj_(2) = mArrow3(zeros(3,1), [0; frame.scale_; 0],'color','g','Parent',frame.ax_);%,'stemWidth', frame.scale_,'tipWidth',frame.scale_,'Parent',frame.ax_);
-            frame.g_obj_(3) = mArrow3(zeros(3,1), [0; 0; frame.scale_],'color','b','Parent',frame.ax_);%,'stemWidth', frame.scale_,'tipWidth',frame.scale_,'Parent',frame.ax_);
+            frame.g_obj_(1) = mArrow3(zeros(3,1), [frame.scale_; 0; 0],'color','r','stemWidth',frame.scale_*0.02,'tipWidth',frame.scale_*0.06,'Parent',frame.ax_);
+            frame.g_obj_(2) = mArrow3(zeros(3,1), [0; frame.scale_; 0],'color','g','stemWidth',frame.scale_*0.02,'tipWidth',frame.scale_*0.06,'Parent',frame.ax_);
+            frame.g_obj_(3) = mArrow3(zeros(3,1), [0; 0; frame.scale_],'color','b','stemWidth',frame.scale_*0.02,'tipWidth',frame.scale_*0.06,'Parent',frame.ax_);
             frame.g_obj_(4) = text(0,0,0,frame.name_);
             
             frame.trans_ = hgtransform('Parent', frame.ax_);

@@ -3,6 +3,10 @@ classdef CitiTruck < Vehicle
     properties 
         x_
     end
+
+    properties (Access = private)
+        l_ %axle distance
+    end
     
     methods
         function cititruck = CitiTruck(x,ax)
@@ -21,6 +25,8 @@ classdef CitiTruck < Vehicle
             cititruck = cititruck@Vehicle(super_arg);
             cititruck.x_=args{1};
             
+            cititruck = cititruck.init;
+               cititruck = cititruck.computePosture;  
         end
         
         function cititruck = set.x_(cititruck, x)
@@ -31,7 +37,8 @@ classdef CitiTruck < Vehicle
             cititruck.x_=x; 
         end 
         
-                cititruck = init(cititruck)
+        cititruck = init(cititruck)
+        cititruck = computePosture(cititruck)
         
     end
     
