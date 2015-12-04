@@ -26,7 +26,7 @@ classdef CitiTruck < Vehicle
             cititruck.x_=args{1};
             
             cititruck = cititruck.init;
-               cititruck = cititruck.computePosture;  
+            cititruck = cititruck.computePosture;  
         end
         
         function cititruck = set.x_(cititruck, x)

@@ -27,7 +27,6 @@ classdef Vehicle
                 vehicle.ax_= axes('XLim',[-5 5],'YLim',[-5 5],'ZLim',[0 1]);
             end
 
-            import casadi.*;
             vehicle.trans_=hgtransform('Parent', vehicle.ax_);;
             
         end
