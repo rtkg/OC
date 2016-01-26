@@ -1,17 +1,26 @@
 classdef CitiTruck < Vehicle
     
     properties 
-        x_
+        s_
+		f_
+		x_
+		y_
+		th_
+		ph_
+		L_
+		v_
+		w_
     end
 
     properties (Access = private)
         l_ %axle distance
-    end
-    
+	end
+	
+
     methods
-        function cititruck = CitiTruck(x,ax)
+        function cititruck = CitiTruck(s,ax)
             if nargin > 0      
-                args{1}=x; %x=[x,y,theta, phi] (position_x,y, heading, steering angle)
+                args{1}=s; %s=[x,y,theta, phi] (position_x,position_y, heading, steering angle)
             else
                 args{1}=zeros(4,1);
             end
@@ -23,18 +32,19 @@ classdef CitiTruck < Vehicle
             end
             
             cititruck = cititruck@Vehicle(super_arg);
-            cititruck.x_=args{1};
-            
-            cititruck = cititruck.init;
-            cititruck = cititruck.computePosture;  
+			cititruck = cititruck.init;
+			cititruck.s_=args{1};
+            %cititruck = cititruck.computePosture;  
+			
         end
         
-        function cititruck = set.x_(cititruck, x)
-            assert(isvector(x));
-            assert(numel(x) == 4);
-            assert((x(3) > -pi) && (x(3) < pi));
-            assert((x(4) > -pi) && (x(4) < pi)); 
-            cititruck.x_=x; 
+        function cititruck = set.s_(cititruck, s)
+            assert(isvector(s));
+            assert(numel(s) == 4);
+            assert((s(3) > -pi) && (s(3) < pi));
+            assert((s(4) > -pi) && (s(4) < pi)); 
+			cititruck.s_=s; 
+			cititruck = cititruck.computePosture;  
         end 
         
         cititruck = init(cititruck)

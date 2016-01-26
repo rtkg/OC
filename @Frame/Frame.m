@@ -25,8 +25,8 @@ classdef Frame < Geometry
                 super_args{2}=border_width;
                 super_args{3}=fill_color;
                 super_args{4}=fill_alpha;
-              otherwise
-                error('Invalid number of constructor arguments for Polygon(...)');
+				otherwise
+                error('Invalid number of constructor arguments for Frame(...)');
             end
             frame = frame@Geometry(super_args{:});
             frame.scale_=args{1};
