@@ -53,37 +53,32 @@ void mexFunction( int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[] )
     } 
  
     TIME autotime;
-    DifferentialState v;
-    DifferentialState s;
-    DifferentialState m;
-    DifferentialState L;
-    Control u;
-    Disturbance test;
-    DMatrix acadodata_M1;
-    acadodata_M1.read( "ct_ocp_test_data_acadodata_M1.txt" );
-    VariablesGrid acadodata_M1_grid(acadodata_M1);
+    DifferentialState x_;
+    DifferentialState y_;
+    DifferentialState th_;
+    DifferentialState ph_;
+    DifferentialState L_;
+    DifferentialState v_;
+    DifferentialState w_;
     DifferentialEquation acadodata_f1;
-    acadodata_f1 << dot(s) == v;
-    acadodata_f1 << dot(v) == (-test*v*v+u)/m;
-    acadodata_f1 << dot(m) == (-1.000000E-02)*u*u;
-    acadodata_f1 << dot(L) == u*u;
+    acadodata_f1 << dot(x_) == cos(th_)*v_;
+    acadodata_f1 << dot(y_) == sin(th_)*v_;
+    acadodata_f1 << dot(th_) == 1/1.700000E+00*tan(ph_)*v_;
+    acadodata_f1 << dot(ph_) == w_;
+    acadodata_f1 << dot(L_) == 1.000000E+00;
 
-    OCP ocp1(0, 10, 20);
-    ocp1.minimizeMayerTerm(L);
+    OCP ocp1(0, 1000, 20);
+    ocp1.minimizeMayerTerm(L_);
     ocp1.subjectTo(acadodata_f1);
-    ocp1.subjectTo(AT_START, s == 0.000000E+00);
-    ocp1.subjectTo(AT_START, v == 0.000000E+00);
-    ocp1.subjectTo(AT_START, L == 0.000000E+00);
-    ocp1.subjectTo(AT_START, m == 1.000000E+00);
-    ocp1.subjectTo(AT_END, s == 1.000000E+01);
-    ocp1.subjectTo(AT_END, v == 0.000000E+00);
-    ocp1.subjectTo((-1.000000E-02) <= v <= 1.300000E+00);
-    ocp1.subjectTo((-1.100000E+00) <= u <= 1.100000E+00);
-    ocp1.subjectTo(test == acadodata_M1_grid);
+    ocp1.subjectTo(AT_START, x_ == (-1.000000E+01));
+    ocp1.subjectTo(AT_START, y_ == (-1.000000E+01));
+    ocp1.subjectTo(AT_START, th_ == 0.000000E+00);
+    ocp1.subjectTo(AT_START, ph_ == 0.000000E+00);
+    ocp1.subjectTo(AT_END, x_ == (-6.000000E+00));
+    ocp1.subjectTo(AT_END, y_ == 0.000000E+00);
 
 
     OptimizationAlgorithm algo1(ocp1);
-    algo1.set( KKT_TOLERANCE, 1.000000E-06 );
     returnValue returnvalue = algo1.solve();
 
     VariablesGrid out_states; 
@@ -92,8 +87,6 @@ void mexFunction( int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[] )
     VariablesGrid out_disturbances; 
     VariablesGrid out_algstates; 
     algo1.getDifferentialStates(out_states);
-    algo1.getControls(out_controls);
-    algo1.getDisturbances(out_disturbances);
     const char* outputFieldNames[] = {"STATES", "CONTROLS", "PARAMETERS", "DISTURBANCES", "ALGEBRAICSTATES", "CONVERGENCE_ACHIEVED"}; 
     plhs[0] = mxCreateStructMatrix( 1,1,6,outputFieldNames ); 
     mxArray *OutS = NULL;

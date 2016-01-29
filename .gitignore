@@ -30,6 +30,7 @@ obj/
 *.a
 *.dll
 *.lib
+*.mexa64
 *.exe
 *.dat
 *.bag

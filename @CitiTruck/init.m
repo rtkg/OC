@@ -55,29 +55,19 @@ cititruck.geometries_=geometries;
 
 %%%%%%%%%%%%%%%%%%%%%%% Dynamics %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-DifferentialState x;
-DifferentialState y;
-DifferentialState th;
-DifferentialState ph;
-DifferentialState L;
+cititruck.x_=acado.DifferentialState('x_');
+cititruck.y_=acado.DifferentialState('y_');
+cititruck.th_= acado.DifferentialState('th_');
+cititruck.ph_= acado.DifferentialState('ph_');
+cititruck.L_= acado.DifferentialState('L_');
+cititruck.v_=acado.DifferentialState('v_');
+cititruck.w_=acado.DifferentialState('w_');
 
-Control v;
-Control w;
+cititruck.f_=acado.DifferentialEquation('f_');
+cititruck.f_.add(dot(cititruck.x_) == cititruck.v_*cos(cititruck.th_));
+cititruck.f_.add(dot(cititruck.y_) == cititruck.v_*sin(cititruck.th_));
+cititruck.f_.add(dot(cititruck.th_) == cititruck.v_/cititruck.l_*tan(cititruck.ph_));
+cititruck.f_.add(dot(cititruck.ph_) == cititruck.w_);
+cititruck.f_.add(dot(cititruck.L_) == cititruck.w_*cititruck.w_); % Dummy equation to integrate used steering power
 
-f=acado.DifferentialEquation;
-f.add(dot(x) == v*cos(th));
-f.add(dot(y) == v*sin(th));
-f.add(dot(th) == v/cititruck.l_*tan(ph));
-f.add(dot(ph) == w);
-f.add(dot(L) == v*v+w*w); % Dummy equation to integrate used power
-
-
-cititruck.x_=x;
-cititruck.y_=y;
-cititruck.th_= th;
-cititruck.ph_= ph;
-cititruck.L_= L;
-cititruck.v_=v;
-cititruck.w_=w;
-cititruck.f_=f;
 end
