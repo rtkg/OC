@@ -54,8 +54,9 @@ G = X(1:2); % x(1:2) in Matlab (0:2)?
 %  NLP
 nlp = struct('x', U, 'f', J, 'g', G);
 
+
 % Allocate an NLP solver
-opts = struct('ipopt',struct('tol',1e-10),'expand',true);
+opts = struct('ipopt',struct('tol',1e-10,'print_level',5,'linear_solver','ma27'),'expand',true);
 solver = nlpsol('solver', 'ipopt', nlp,opts);
 
 arg = struct;
