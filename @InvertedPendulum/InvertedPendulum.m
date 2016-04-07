@@ -17,7 +17,7 @@ classdef InvertedPendulum
 	
 	methods (Access = protected)
 		function dx=dynamics(inverted_pendulum, t,x)
-			dx=[x(2); -inverted_pendulum.g_/inverted_pendulum.l_*sin(x(1))+inverted_pendulum.c_*inverted_pendulum.u_];
+			dx=[x(2); inverted_pendulum.g_/inverted_pendulum.l_*sin(x(1))+inverted_pendulum.c_*inverted_pendulum.u_];
 		end
 		
 		inverted_pendulum = init(inverted_pendulum);
@@ -39,7 +39,6 @@ classdef InvertedPendulum
 		function inverted_pendulum = set.x_(inverted_pendulum, x)
 			assert(isvector(x));
 			assert(numel(x) == 2);
-			assert((x(1) > -pi) && (x(1) <= pi));
 			inverted_pendulum.x_=x;
 			Rz = makehgtform('zrotate',x(1));
 			set(inverted_pendulum.trans_,'Matrix',Rz);
