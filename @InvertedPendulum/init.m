@@ -2,7 +2,6 @@ function inverted_pendulum = init(inverted_pendulum)
 
 
 inverted_pendulum.g_=9.81;
-inverted_pendulum.m_=1;
 inverted_pendulum.l_=1;
 inverted_pendulum.c_=1;
 inverted_pendulum.x_=[0; 0];

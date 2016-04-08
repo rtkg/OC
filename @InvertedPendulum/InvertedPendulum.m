@@ -1,15 +1,14 @@
 classdef InvertedPendulum
 	
 	properties (Access = protected)
-		g_  %gravity
-		m_  %pendulum mass
-		l_  %pendulum length
-		c_  %input gain
 		ax_
 		trans_
 	end
 	
 	properties  (Access = public)
+	    g_  %gravity
+		l_  %pendulum length
+		c_  %input gain
 		x_  %pendulum state [phi; dphi]
 		u_  %control
 		dt_ %sampling rate [s]

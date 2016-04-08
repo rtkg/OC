@@ -63,27 +63,6 @@ for k=1:N
 	R=[R; R_terms];
 end
 
-%Functions for calculating g and R
-g_fcn = Function('g_fcn',{v},{g});
-R_fcn = Function('R_fcn',{v},{R});
-
-%Functions for calculating the Jacobians of g and R
-jac_g_fcn = g_fcn.jacobian();
-jac_R_fcn = R_fcn.jacobian();
-
-%To allocate a QP solver in CasADi, we need to know the sparsity patterns of H and A
-A_sparsity = jac_R_fcn.sparsity_out(0);
-jac_R_sparsity = jac_R_fcn.sparsity_out(0);
-H_sparsity = jac_R_sparsity'*jac_R_sparsity;  %Get sparsity pattern of multiplication
-
-
-%Allocate a QP solver
-qp= struct('h',H_sparsity, 'a',A_sparsity);
-%opts = struct('ipopt',struct('linear_solver','ma27'));
-solver = qpsol('solver', 'gurobi', qp);
-
-
-return
 % Objective function
 obj = R'*R/2;
 
