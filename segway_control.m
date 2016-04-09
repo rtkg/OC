@@ -20,6 +20,7 @@ K=acker(A,B,P);
 r=zeros(4,1);
 for i=1:10000 %simulate for 10000 steps
 	r(1)=sin(i*dt);
+	
 	segway.u_=-K*(segway.x_-r);
 	
 	tic;
