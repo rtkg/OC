@@ -14,14 +14,16 @@ dt=segway.dt_;
 
 A=[0 1 0 0; 0 0 m/M*g 0; 0 0 0 1; 0 0 g/l*(M+m)/M 0];
 B=[0; 1/M; 0; 1/m/l];
+C=[1 0 0 0];
 P=[-1; -1; -5; -5];
 K=acker(A,B,P);
 
 r=zeros(4,1);
+G=-inv(C*inv(A-B*K)*B);
 for i=1:10000 %simulate for 10000 steps
 	r(1)=sin(i*dt);
 	
-	segway.u_=-K*(segway.x_-r);
+	segway.u_=G*r(1)-K*segway.x_;
 	
 	tic;
 	segway.x_=segway.step; %integrate forward according to x_new=f(x,u,dt) and update the state vector
